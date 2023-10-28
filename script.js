@@ -1,8 +1,8 @@
 const timersContainer = document.getElementById('timers');
 const addTimerButton = document.getElementById('addTimerButton');
 
-// Call a function to load timers from localStorage on page load
-loadTimers();
+// Call createNewTimer when the page loads
+createNewTimer();
 
 addTimerButton.addEventListener('click', createNewTimer);
 
@@ -42,9 +42,7 @@ function createNewTimer() {
   }
 
   function deleteTimer() {
-    timersContainer.removeChild(timerElement);
-    // Call a function to save the updated timers to localStorage
-    saveTimers();
+    timersContainer.removeChild(timerElement); // Remove the timer element
   }
 
   function updateTimeDisplay() {
@@ -54,28 +52,28 @@ function createNewTimer() {
       timerDisplay.textContent = `${formatTime(elapsedTime)}`;
     }
   }
-
+  
   function formatTime(seconds) {
     const hours = Math.floor(seconds / 3600);
     const minutes = Math.floor((seconds % 3600) / 60);
     seconds = Math.floor(seconds % 60);
-    return `${hours}h${minutes}m${seconds}s`;
+    return `${hours}h:${minutes}m:${seconds}s`;
   }
-
+  
   toggleButton.addEventListener('click', toggleTimer);
-  deleteButton.addEventListener('click', deleteTimer);
+  deleteButton.addEventListener('click', deleteTimer); // Add click event for delete button
   
   timerElement.appendChild(activityName);
   timerElement.appendChild(toggleButton);
-  timerElement.appendChild(deleteButton);
+  timerElement.appendChild(deleteButton); // Add the delete button
   timerElement.appendChild(timerDisplay);
   
   timersContainer.appendChild(timerElement);
-
-  // Call a function to save the updated timers to localStorage
+  
+  // Initially display the timer with elapsed time
+  timerDisplay.textContent = `${formatTime(elapsedTime)}`;
   saveTimers();
 }
-
 function saveTimers() {
   const timers = [];
   const timerElements = timersContainer.querySelectorAll('.timer');
